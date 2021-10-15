@@ -1,5 +1,17 @@
+let axios;
 const crypto = require('crypto');
 const readline = require('readline');
+
+const {
+  execSync,
+} = require('child_process')
+
+try {
+  axios = require('axios');
+} catch (err) {
+  execSync('npm i');
+  axios = require('axios');
+}
 
 const {
   setLeverage,
@@ -128,6 +140,8 @@ const setLeverageForAllInstruments = async myLeverage => {
       await sleep(500);
       console.log(`Ended ${symbolObj.symbol}`);
     }
+
+    console.log('Готово!');
   })();
 };
 
