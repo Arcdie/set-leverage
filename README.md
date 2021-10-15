@@ -12,6 +12,6 @@
 # Donate
 
 <ul>
-  <li>USDT TRC20: <b>TAs7n92PiBgmGpB79SurCzfNMyyKUXgom2<b></li>
+  <li>USDT TRC20: <b>TAs7n92PiBgmGpB79SurCzfNMyyKUXgom2</b></li>
   <li>BTC: <b>bc1qmsla9dmj04yw0ze09ezd0tjlp6j6cwjupmdmxp</b></li>
 </ul>
