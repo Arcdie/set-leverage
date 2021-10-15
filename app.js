@@ -1,8 +1,3 @@
-/* Параметры, которые нужно ввести */
-const BINANCE_APIKEY = 'your_apikey';
-const BINANCE_SECRET = 'your_secret';
-
-/* Код, далее уже логика */
 const crypto = require('crypto');
 const readline = require('readline');
 
@@ -19,24 +14,53 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-const askQuestion = () => {
-  rl.question('Введите плечо\n', answer => {
-    if (!answer) {
-      console.log('Вы ничего не ввели');
-      return askQuestion();
-    }
+let USER_LEVERAGE = 25;
+let BINANCE_APIKEY = 'your_apikey';
+let BINANCE_SECRET = 'your_secret';
 
-    const numberAnswer = parseInt(answer, 10);
+const askQuestion = (numberStep = 0) => {
+  let question;
 
-    if (Number.isNaN(numberAnswer)
-      || numberAnswer < 0
-      || numberAnswer > 125) {
-      console.log('Невалидные данные');
-      return askQuestion();
-    }
+  if (numberStep === 0) {
+    rl.question('Введите плечо\n', answer => {
+      if (!answer) {
+        console.log('Вы ничего не ввели');
+        return askQuestion(0);
+      }
 
-    setLeverageForAllInstruments(numberAnswer);
-  });
+      const numberAnswer = parseInt(answer, 10);
+
+      if (Number.isNaN(numberAnswer)
+        || numberAnswer < 0
+        || numberAnswer > 125) {
+        console.log('Невалидные данные');
+        return askQuestion(0);
+      }
+
+      USER_LEVERAGE = numberAnswer;
+      return askQuestion(1);
+    });
+  } else if (numberStep === 1) {
+    rl.question('Введите binance apikey\n', answer => {
+      if (!answer) {
+        console.log('Вы ничего не ввели');
+        return askQuestion(1);
+      }
+
+      BINANCE_APIKEY = answer.trim();
+      return askQuestion(2);
+    });
+  } else {
+    rl.question('Введите binance secret\n', answer => {
+      if (!answer) {
+        console.log('Вы ничего не ввели');
+        return askQuestion(2);
+      }
+
+      BINANCE_SECRET = answer.trim();
+      setLeverageForAllInstruments(USER_LEVERAGE);
+    });
+  }
 };
 
 const setLeverageForAllInstruments = async myLeverage => {
@@ -112,4 +136,4 @@ const sleep = ms => {
 };
 
 
-askQuestion();
+askQuestion(0);
